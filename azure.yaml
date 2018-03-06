@@ -1,0 +1,27 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: zullshop
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: zullshop
+    spec:
+      containers:
+      - name: zullshop
+        image: rondimregistry.azurecr.io/zull-shop-front:v0.0.1
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zullshop
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: zullshop
