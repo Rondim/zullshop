@@ -1,0 +1,47 @@
+type Post {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  isPublished: Boolean! @default(value: "false")
+  title: String!
+  text: String!
+  author: User!
+}
+
+type User {
+  id: ID! @unique
+  email: String! @unique
+  password: String!
+  name: String!
+  posts: [Post!]!
+  department: Department
+}
+
+type Order {
+  id: ID! @unique
+  department: Department!
+  memberCard: String!
+  name: String!
+  surname: String!
+  patronymic: String
+  check: Int!
+  coupons: [Coupon!]!
+}
+
+type Department {
+  id: ID! @unique
+  name: String!
+  orders: [Order!]!
+  users: [User!]!
+}
+
+type Coupon {
+  id: ID! @unique
+  couponType: CouponKind!
+  couponNumber: String! @unique
+}
+
+enum CouponKind {
+  MEN
+  WOMEN
+}
