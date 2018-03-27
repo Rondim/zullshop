@@ -619,6 +619,7 @@ input DepartmentWhereInput {
 
 input DepartmentWhereUniqueInput {
   id: ID
+  name: String
 }
 
 """

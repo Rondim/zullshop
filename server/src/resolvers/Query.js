@@ -26,6 +26,10 @@ const Query = {
     const id = getUserId(ctx)
     return ctx.db.query.user({ where: { id } }, info)
   },
+  orders(parent, args, ctx, info) {
+    const id = getUserId(ctx);
+    return ctx.db.query.orders({}, info);
+  }
 }
 
 module.exports = { Query }

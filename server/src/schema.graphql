@@ -1,16 +1,29 @@
 # import Post from "./generated/prisma.graphql"
+# import Department from "./generated/prisma.graphql"
+# import CouponKind from "./generated/prisma.graphql"
+# import Order from "./generated/prisma.graphql"
 
 type Query {
   feed: [Post!]!
   drafts: [Post!]!
   post(id: ID!): Post
   me: User
+  orders: [Order!]!
 }
 
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
   createDraft(title: String!, text: String!): Post!
+  createOrder(
+    name: String!,
+    surname: String!,
+    patronymic: String!,
+    memberCard: String!,
+    check: Int!,
+    coupons: [CouponInput!]!
+  ): Order!
+  createDepartment(name: String!): Department!
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!
 }
@@ -30,3 +43,9 @@ type User {
   name: String!
   posts: [Post!]!
 }
+
+input CouponInput {
+  couponNumber: String!,
+  couponType: CouponKind!
+}
+
