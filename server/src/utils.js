@@ -1,11 +1,19 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+
+let counter = 0;
 
 function getUserId(ctx) {
-  const Authorization = ctx.request.get('Authorization')
-  if (Authorization) {
-    const token = Authorization.replace('Bearer ', '')
-    const { userId } = jwt.verify(token, process.env.APP_SECRET)
-    return userId
+  counter++;
+  const Authorization = ctx.request.get('Authorization');
+  const token = Authorization.replace('Bearer ', '');
+
+  if (Authorization && token !==null) {
+    try {
+      const { userId } = jwt.verify(token, process.env.APP_SECRET);
+      return userId;
+    } catch(err) {
+      throw new AuthError();
+    }
   }
 
   throw new AuthError()
