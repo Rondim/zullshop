@@ -18,7 +18,9 @@ const order = {
           id: userId
         }
       }
-    }, info);
+    },'{ id }', info);
+
+    console.log('Departments', departments[0]);
 
     return ctx.db.mutation.createOrder({
       data: {
