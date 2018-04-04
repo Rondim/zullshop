@@ -28,7 +28,7 @@ const Query = {
   },
   orders(parent, args, ctx, info) {
     const id = getUserId(ctx);
-    return ctx.db.query.orders({}, info);
+    return ctx.db.query.orders(null, info);
   }
 }
 

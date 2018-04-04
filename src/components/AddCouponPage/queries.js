@@ -11,3 +11,22 @@ export const ME_DEPARTMENT = gql`
     }
   }
 `;
+
+export const GET_ORDERS = gql`
+  {
+    orders {
+      department {
+        name
+      }
+      memberCard
+      surname
+      name
+      patronymic
+      check
+      coupons {
+        couponType
+        couponNumber
+      }
+    }
+  }
+`;

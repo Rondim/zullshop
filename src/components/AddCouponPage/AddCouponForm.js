@@ -134,7 +134,7 @@ const schema = yup.object().shape({
     couponNumber: yup.string().required('Пустое')
   })).min(1)
 });
-const AddCouponForm = () => {
+const AddCouponPage = () => {
   return (
     <Mutation mutation={CREATE_ORDER}>
       {(createOrder, { data, loading, error }) => {
@@ -160,4 +160,4 @@ const AddCouponForm = () => {
   );
 };
 
-export default AddCouponForm;
+export default AddCouponPage;
