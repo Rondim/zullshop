@@ -22,13 +22,13 @@ const HomePage = () => {
               </Col>
             </Row>
             <HeaderRow />
-            {womenList.map(({ memberCard, fio, coupons, isZull, order }) => (
+            {womenList.map(({ memberCard, fio, coupons, order, location }) => (
               <ParticipantRow
                 key={order}
                 memberCard={memberCard}
                 fio={fio}
                 coupons={coupons}
-                isZull={isZull}
+                location={location}
               />
             ))}
             
@@ -40,13 +40,13 @@ const HomePage = () => {
               </Col>
             </Row>
             <HeaderRow />
-            {menList.map(({ memberCard, fio, coupons, isZull, order }) => (
+            {menList.map(({ memberCard, fio, coupons, location, order }) => (
               <ParticipantRow
                 key={order}
                 memberCard={memberCard}
                 fio={fio}
                 coupons={coupons}
-                isZull={isZull}
+                location={location}
               />
             ))}
           </Col>
@@ -61,17 +61,21 @@ export default HomePage;
 function getRowData(arr) {
   let result = arr.map(value => {
     const { department, membercard, fio, coupons, order } = value;
-    if (department === 'Белый Яр') {
-      // debugger;
+    let location;
+    if (department === 'Белый Яр' || department === 'БЯ') {
+      location = 'Б';
+    } else if (department === 'Усть-Абакан' || department === 'УА') {
+      location = 'У';
+    } else {
+      location = 'Z';
     }
-    const isZull = department !== 'Белый Яр' && department !== 'БЯ';
     const shortFio = getShortFio(fio);
     return {
       memberCard: membercard,
-      isZull,
       fio: shortFio,
       coupons,
-      order
+      order,
+      location
     };
   });
   result = result.sort((aObj, bObj) => {
