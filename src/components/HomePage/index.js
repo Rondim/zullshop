@@ -1,108 +1,72 @@
-import React from 'react';
-import men from '../../men.json';
-import women from '../../women.json';
-import { Container, Col, Row } from 'reactstrap';
-import ParticipantRow from './ParticipantRow';
-import HeaderRow from './HeaderRow';
+import React, { Component } from 'react';
+import ParticipantsTab from './ParticipantsTab';
+import { Container, Row, Col } from 'reactstrap';
+import glamorous from 'glamorous';
+import WinnersTab from './WinnersTab';
 
-const HomePage = () => {
-  const womenList = getRowData(women);
-  const menList = getRowData(men);
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1 className="App-title">ZULL</h1>
-      </header>
-      <Container>
-        <Row>
-          <Col xs="6">
-            <Row style={{fontSize: '200%'}}>
-              <Col xs={12}>
-                Розыгрыш "25 по 2000"
-              </Col>
-            </Row>
-            <HeaderRow />
-            {womenList.map(({ memberCard, fio, coupons, order, location }) => (
-              <ParticipantRow
-                key={order}
-                memberCard={memberCard}
-                fio={fio}
-                coupons={coupons}
-                location={location}
-              />
-            ))}
-            
-          </Col>
-          <Col xs="6">
-            <Row style={{ fontSize: '200%' }}>
-              <Col xs={12}>
-                Розыгрыш "Для мужчин"
-              </Col>
-            </Row>
-            <HeaderRow />
-            {menList.map(({ memberCard, fio, coupons, location, order }) => (
-              <ParticipantRow
-                key={order}
-                memberCard={memberCard}
-                fio={fio}
-                coupons={coupons}
-                location={location}
-              />
-            ))}
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
+const WINNERS = 'winners';
+const PARTICIPANTS = 'participants';
+
+const TabS = glamorous.div(props => {
+  const backgroundColor = props.active ? '#969696' : '#D6D6D6';
+  const color = props.active ? 'white' : 'black';
+  return {
+    backgroundColor,
+    fontSize: '2em',
+    color,
+    ':hover': {
+      backgroundColor: '#B5B5B5'
+    }
+  };
+});
+const VideoS = glamorous.div({
+  margin: '10px 0'
+});
+
+class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { tab: WINNERS };
+  }
+  handleTabClick = (tab) => {
+    this.setState({ tab });
+  }
+  render() {
+    return (
+      <div className="winner-tab">
+        <header className="App-header">
+          <h1 className="App-title">ZULL</h1>
+        </header>
+        <VideoS>
+          <iframe title="lottery" width="560" height="315" src="https://www.youtube.com/embed/_OimhidCzHw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </VideoS>
+        <Container>
+          <Row>
+            <Col xs={6}>
+              <TabS 
+                onClick={() => this.handleTabClick(WINNERS)}
+                active={this.state.tab === WINNERS}
+              >
+                Победители
+              </TabS>
+            </Col>
+            <Col xs={6}>
+              <TabS
+                onClick={() => this.handleTabClick(PARTICIPANTS)}
+                active={this.state.tab === PARTICIPANTS}
+              >
+                Участники
+              </TabS>
+            </Col>
+          </Row>
+          { this.state.tab === WINNERS 
+            ? <WinnersTab />
+            : <ParticipantsTab />
+          }
+        </Container>
+      </div>
+    );
+  }
 };
 
 export default HomePage;
-
-function getRowData(arr) {
-  let result = arr.map(value => {
-    const { department, membercard, fio, coupons, order } = value;
-    let location;
-    if (department === 'Белый Яр' || department === 'БЯ') {
-      location = 'Б';
-    } else if (department === 'Усть-Абакан' || department === 'УА') {
-      location = 'У';
-    } else {
-      location = 'Z';
-    }
-    const shortFio = getShortFio(fio);
-    return {
-      memberCard: membercard,
-      fio: shortFio,
-      coupons,
-      order,
-      location
-    };
-  });
-  result = result.sort((aObj, bObj) => {
-    const a = aObj.memberCard;
-    const b = bObj.memberCard;
-    if (!isNumeric(a) && !isNumeric(b)) {
-      return 0;
-    }
-    if (!isNumeric(a)) return -1;
-    if (!isNumeric(b)) return 1;
-
-    return a - b;
-    
-  });
-  console.log(result);
-  console.log(result.length);
-  return result;
-
-  function getShortFio(fio) {
-    const arr = fio.split(' ');
-    const surname = arr[0];
-    const nameChar = arr[1] ? arr[1].substring(0,1) : '';
-    const patronymicChar = arr[2] ? arr[2].substring(0, 1) : '';
-    return `${surname} ${nameChar}. ${patronymicChar}.`;
-  }
-}
-
-function isNumeric(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}

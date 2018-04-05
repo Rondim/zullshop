@@ -1,0 +1,20 @@
+[
+  {
+    "fio": "Чертыков Степан",
+    "membercard": 1207,
+    "coupon": "М0017",
+    "department": "Аскиз"
+  },
+  {
+    "fio": "Быков Александр",
+    "membercard": 284,
+    "coupon": "М0102",
+    "department": "Усть-Абакан"
+  },
+  {
+    "fio": "Кулемеев Олег",
+    "membercard": "Au 06",
+    "coupon": "М0028",
+    "department": "Аскиз"
+  }
+]

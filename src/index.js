@@ -12,7 +12,6 @@ import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
-import gql from 'graphql-tag';
 
 const authLink = setContext((_, { headers }) => {
   let token = localStorage.getItem('token');
@@ -42,19 +41,6 @@ const client = new ApolloClient({
   ]),
   cache: new InMemoryCache()
 });
-
-client.query({
-  query: gql`
-    {
-      orders {
-        id
-        name
-      }
-    }
-  `
-})
-.then(({data: { orders }}) => console.log(orders))
-.catch(err => console.log(err));
 
 ReactDOM.render(
   <ApolloProvider client={client}>

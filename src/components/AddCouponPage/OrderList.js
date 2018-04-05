@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Grid } from 'react-virtualized';
+import React from 'react';
+// import { Grid } from 'react-virtualized';
 import { Query } from 'react-apollo';
 import { GET_ORDERS } from './queries';
 import OrderGrid from './OrderGrid';

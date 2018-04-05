@@ -3,7 +3,6 @@ import { FormGroup, Label, Col, Button } from 'reactstrap';
 import { Formik, Field, FieldArray } from 'formik';
 import yup from 'yup';
 import { Query, Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import TextField from './TextField';
 import { ME_DEPARTMENT } from './queries';
